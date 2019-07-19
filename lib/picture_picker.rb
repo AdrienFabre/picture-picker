@@ -10,12 +10,9 @@ class PicturePicker
 
   def most_similar_picture(picture_selected)
     targeted_descriptions = get_descriptions(picture_selected)
-
     pictures_descriptions = get_other_descriptions(picture_selected)
-
     pictures_ranked =
       rank_similarities(targeted_descriptions, pictures_descriptions)
-
     pictures_ranked.sort_by { |k, v| v }.reverse.first[0]
   end
 
