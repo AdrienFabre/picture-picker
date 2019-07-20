@@ -23,30 +23,21 @@ class PicturePicker
   end
 
   def get_other_descriptions(picture_selected)
-    pictures_descriptions = Hash.new(0)
+    pictures_descriptions = {}
     data.keys.map do |picture|
       next if picture == picture_selected
 
-      pictures_descriptions[picture] = []
-      data[picture].map do |picture_data|
-        pictures_descriptions[picture] << picture_data['description']
-      end
+      pictures_descriptions[picture] = get_descriptions(picture)
     end
     pictures_descriptions
   end
 
   def rank_similarities(targeted_descriptions, pictures_descriptions)
-    pictures_ranked = Hash.new(0)
+    pictures_ranked = {}
     pictures_descriptions.each do |picture, descriptions|
       pictures_ranked[picture] = 0
       targeted_descriptions.each do |description|
-        if descriptions.include?(description)
-          if pictures_ranked[picture].positive?
-            pictures_ranked[picture] += 1
-          else
-            pictures_ranked[picture] = 1
-          end
-        end
+        pictures_ranked[picture] += 1 if descriptions.include?(description)
       end
     end
     pictures_ranked
