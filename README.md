@@ -4,14 +4,12 @@ This program has been created to enable the selection of the most similar pictur
 
 ## Use case
 
-A user posts a picture on an app, we might assume that they would be interested in posts similar to theirs, or at least referring to similar content. One way to do this might be to find other posts with similar images to theirs.
-
-As an example, we have made 20 plant images available and their dataset of labels from the Google Cloud Vision API for those images
+A user posts a picture on an app, we might assume that they would be interested in posts similar to theirs, or at least referring to similar content. One way to do this might be to find other posts with similar images to theirs. As an example, we have a dataset of labels from the Google Cloud Vision API from 20 plant images.
 (see `data.json`).
 
 ## Challenge
 
-If I were to post any one of the 20 images, which of the other 19 would be relevant to show to me as "other posts like yours"?
+If I were to post any one of the 20 images, which of the other 19 would be relevant to show to me as "other posts like yours"? 
 
 Write an algorithm that uses the data we provide to figure out which images are most similar.
 
@@ -25,10 +23,10 @@ To begin, I searched how data could be used to compare those pictures. I found t
 
 I started to only use the label and create the algorithm, then I added the score and the option to return a batch of best pictures.
 
-- 1 - I gather the information about the picture we want to find a similar picture to. I call it 'chosen pic'. In this particular case, this is one picture from the data file. In a real situation, the posted picture would go through the Google Cloud Vision API and return the same data format. So, I go through the data and get the description from each label, which gives me the 'chosen descs'. 
+- 1 - I gather the information about the picture we want to find a similar picture to. I call it 'chosen pic'. In this particular case, this is one picture from the data file. In a real situation, the posted picture would go through the Google Cloud Vision API and return the same data format. So, I go through the data and get the description from each label, which gives me the 'chosen descs'.
   - Here I could narrow down those descriptions by taking only those with a score higher than 0.85 for example, so, I would optimize its efficiency.
 
-- 2 - I gather the information about the pictures we already have in order to show the most relevant one. Here, this is where there is a higher level of complexity because we have to run the same algorithm as for one picture but for all pictures. 
+- 2 - I gather the information about the pictures we already have in order to show the most relevant one. Here, this is where there is a higher level of complexity because we have to run the same algorithm as for one picture but for all pictures.
   - We could have all previously analysed pictures already ready to compare and do an updated analysis from the ML from time to time. Also, we could place filters to reduce the number of analysed pictures, such as date posted, location or number of likes.
 
 - 3 - I rank every picture comparison to the chosen picture. Here, I go through every description of every picture and I increment the rank if the description matches, on average, this file has 10 descriptions for one picture. So, if I compare 1 picture to 1 picture, I would go through 10 times 10 comparisons, so 100. For, 20 pictures, I would go through 10 times 200 comparisons, so 2000. This is where the algorithm is the weakest.
