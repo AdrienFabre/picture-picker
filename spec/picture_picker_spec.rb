@@ -1,25 +1,23 @@
 require 'picture_picker'
 
 describe PicturePicker do
-  let(:pictures_data_path) { 'spec/data.json' }
-  let(:quantity_wanted) { 3 }
-  let(:minimum_score) { 0.85 }
-  subject(:picture_picker) { described_class.new(pictures_data_path) }
+  let(:file_path) { 'spec/data.json' }
+  let(:batch) { 3 }
+  let(:min_score) { 0.85 }
+  subject(:picture_picker) { described_class.new(file_path) }
 
   describe 'select the most similar images' do
     context 'taking into account only the description' do
       it 'retuns the picture with the highest similarity score' do
         picture = '1.jpg'
-        expect(
-          picture_picker.most_similar_picture(picture_selected: picture)
-        ).to eq(%w[16.jpg])
+        expect(picture_picker.most_similar_pics(chosen_pic: picture)).to eq(
+          %w[16.jpg]
+        )
       end
       it 'retuns 3 pictures with the highest similarity score' do
         picture = '1.jpg'
         expect(
-          picture_picker.most_similar_picture(
-            picture_selected: picture, quantity_wanted: quantity_wanted
-          )
+          picture_picker.most_similar_pics(chosen_pic: picture, batch: batch)
         ).to eq(%w[16.jpg 15.jpg 2.jpg])
       end
     end
@@ -27,18 +25,16 @@ describe PicturePicker do
       it 'retuns the picture with the highest similarity score' do
         picture = '1.jpg'
         expect(
-          picture_picker.most_similar_picture(
-            picture_selected: picture, minimum_score: minimum_score
+          picture_picker.most_similar_pics(
+            chosen_pic: picture, min_score: min_score
           )
         ).to eq(%w[18.jpg])
       end
       it 'retuns 3 pictures with the highest similarity score' do
         picture = '1.jpg'
         expect(
-          picture_picker.most_similar_picture(
-            picture_selected: picture,
-            minimum_score: minimum_score,
-            quantity_wanted: quantity_wanted
+          picture_picker.most_similar_pics(
+            chosen_pic: picture, min_score: min_score, batch: batch
           )
         ).to eq(%w[18.jpg 17.jpg 13.jpg])
       end
