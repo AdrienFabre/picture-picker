@@ -4,6 +4,8 @@ class PicturePicker
   attr_reader :data, :min_score
 
   def initialize(file_path)
+    file_path_valid?(file_path)
+
     file = File.open file_path
     @data = JSON.load file
   end
@@ -17,6 +19,10 @@ class PicturePicker
   end
 
   private
+
+  def file_path_valid?(file_path)
+    raise "No such file @ #{file_path}" unless File.file? file_path
+  end
 
   def get_descs(chosen_pic)
     data[chosen_pic].map do |chosen_data|
@@ -38,7 +44,8 @@ class PicturePicker
     pics_ranked = {}
     other_descs.each do |pic, descs|
       pics_ranked[pic] = 0
-      chosen_descs.each { |desc| pics_ranked[pic] += 1 if descs.include?(desc) }
+      joined_desc = descs + chosen_descs
+      pics_ranked[pic] = joined_desc.length - joined_desc.uniq.length
     end
     pics_ranked
   end

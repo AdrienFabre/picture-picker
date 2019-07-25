@@ -40,4 +40,13 @@ describe PicturePicker do
       end
     end
   end
+  describe 'returns an error message' do
+    it 'raises an error if the file is not found' do
+      absent_file_path = './spec/absent_file.log'
+      expect { described_class.new(absent_file_path) }.to raise_error(
+        RuntimeError,
+        "No such file @ #{absent_file_path}"
+      )
+    end
+  end
 end
