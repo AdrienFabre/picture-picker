@@ -44,8 +44,8 @@ class PicturePicker
     pics_ranked = {}
     other_descs.each do |pic, descs|
       pics_ranked[pic] = 0
-      joined_desc = descs + chosen_descs
-      pics_ranked[pic] = joined_desc.length - joined_desc.uniq.length
+      merged_descs = descs + chosen_descs
+      pics_ranked[pic] = merged_descs.length - merged_descs.uniq.length
     end
     pics_ranked
   end

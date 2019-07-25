@@ -37,7 +37,7 @@ I started to only use the label and create the algorithm, then I added the score
   - On the other side we could decide that if one score is higher than 5, we would suggest this picture and not analyse the rest.
   - Finally, we could transform the analysed pictures into a hash where the descriptions are the keys and the values are the pictures if higher than 0.85 score, so we could return pictures matching the 3 highest score of the chosen picture directly.
 
-    - **UPDATE** I updated the algorithm to be more efficient. As the similarity score is the number of matching description labels among two arrays, instead of comparing each label one by one, I would join the 2 arrays of descriptions, which could give me an array of 20 elements. The number of similarities are the number of duplicates in the array, so I can just deduce the number of element in the array after `.uniq` to the total number of elements before `.uniq`. Now, the complexity is greatly reduced.
+    - **UPDATE** I updated the algorithm to be more efficient. As the similarity score is the number of matching description labels among two arrays, instead of comparing each label one by one, I would merge the 2 arrays of descriptions, which could give me an array of 20 elements. The number of similarities are the number of duplicates in the array, so I can just deduce the number of element in the array after `.uniq` to the total number of elements before `.uniq`. Now, the complexity is greatly reduced.
 
 - 4 - I sort the array of pictures ranked into and pick the required batch.
 
